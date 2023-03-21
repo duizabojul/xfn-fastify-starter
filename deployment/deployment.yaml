@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xfn-api
+  namespace: crossplane-system
+spec:
+  selector:
+    matchLabels:
+      app: xfn-api
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: xfn-api
+    spec:
+      serviceAccountName: xfn-api
+      containers:
+        - name: xfn-api
+          image: your-registry/xfn-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 200Mi
+          volumeMounts:
+            - name: xfn-api-config
+              mountPath: /home/config
+      volumes:
+        - name: xfn-api-config
+          configMap:
+            name: xfn-api-config

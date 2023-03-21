@@ -1,0 +1,154 @@
+config:
+  apiVersion: xfn.crossplane.net/v1alpha1
+  kind: XfnConfig
+  xfns: []
+
+desired:
+  composite:
+    connectionDetails: []
+    resource:
+      apiVersion: iam.crossplane.foobar.net/v1alpha1
+      kind: XFnTest
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+          argocd.argoproj.io/tracking-id: >-
+            it-central-iam-attachments:iam.crossplane.foobar.net/FnTest:iam-attachments/test-policy
+        creationTimestamp: "2023-02-17T15:25:41Z"
+        finalizers:
+          - composite.apiextensions.crossplane.io
+        generateName: test-policy-
+        generation: 4
+        labels:
+          crossplane.io/claim-name: test-policy
+          crossplane.io/claim-namespace: iam-attachments
+          crossplane.io/composite: test-policy-8djd7
+        name: test-policy-8djd7
+        resourceVersion: "1671784"
+        uid: 11d94bf7-3cc8-4cf2-92c0-0ff5bafd5f77
+      spec:
+        orphanAndBackup: true
+        toto:
+          - aws-dev
+        adminRoleArn: "arn:aws:iam::024454689942:role/eks-administrator-it"
+        claimRef:
+          apiVersion: iam.crossplane.foobar.net/v1alpha1
+          kind: FnTest
+          name: test-policy
+          namespace: iam-attachments
+        compositionRef:
+          name: aws-iam-fntest-v1alpha1
+        compositionRevisionRef:
+          name: aws-iam-fntest-v1alpha1-7fa67cb
+        compositionUpdatePolicy: Automatic
+        policy: '{= { toto: "tata"} | json }}'
+        writeConnectionSecretToRef:
+          name: 11d94bf7-3cc8-4cf2-92c0-0ff5bafd5f77
+          namespace: crossplane-secrets
+      status:
+        clusterCA: |
+          -----BEGIN CERTIFICATE-----
+          MIIC/jCCAeagAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
+          cm5ldGVzMB4XDTIzMDIxMzE4NDkyOFoXDTMzMDIxMDE4NDkyOFowFTETMBEGA1UE
+          AxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALPi
+          x0jstwQWQvSUyIwtouO1oSfSm5PJP/FrFida/oOkHZUsxzAi0QNRJlTaxh3NUmRT
+          kmy56O0Vn9WyrSmIXROj3llnQ0USNsduVIO5cBwvjV4MEYGVOBrfClrV1ZJf1EcJ
+          COjBfZ3TLMBFr0dZI+CGfguL9sUvxcbGZvfNJqaeV97H33nQJPKXevb2ZFMo9ONK
+          HqKhM5Y9du8nXTuNTA7nCZOnWP1GFXptPDS/WgXvkAVMrdpPsTijUeyjAC0qRUyj
+          FqVKaMmObudeb6f+wnsR+NFPQRJHqJ3Vd2tMk/pwtxhA5IN+s5OzFps3fJ7HS7UV
+          ZfDNrXk/5HrxvxpUe+UCAwEAAaNZMFcwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB
+          /wQFMAMBAf8wHQYDVR0OBBYEFJDpjRtzWHPpvEuU/251HW1g9NRZMBUGA1UdEQQO
+          MAyCCmt1YmVybmV0ZXMwDQYJKoZIhvcNAQELBQADggEBAB3/V5J9F9NcmSPJQWd5
+          1XBKUKNMD+joQN8bS4vb+BSsbottAW+6REL3BpnWtPpiIur3NYcy9B1FNGWk+sO1
+          7yObsKByk1HOry8CuZuNMsGmv427OX11EOmBv3wtuJ/pltSFXXrgiO9b1n/k042V
+          +WnV7TrCOjIWGr56XlkpqBR+E9JCawHDk/rAe6kuZ8WuJlNnmHWQ60iWcUEFFPoQ
+          2AUKYvG9sEPKlhV0KAdneeZkjyFM3VdhXdeG65nzXgkRilWfj6Hf+x3pFYgi4cm2
+          4zQ4Q//avtOjKmqoN9hxKjw3K7eZHQVj4seulVPBdWwj8L2OLcBMgqoALE6HWKvW
+          76A=
+          -----END CERTIFICATE-----
+        conditions:
+          - lastTransitionTime: "2023-02-17T15:25:46Z"
+            message: >-
+              cannot compose resources: cannot run Composition Function
+              pipeline: cannot run function "templater": cannot run container:
+              rpc error: code = Unknown desc = exit status 1: xfn: error:
+              spark.Command.Run(): OCI runtime error: exit status 1
+            reason: ReconcileError
+            status: "False"
+            type: Synced
+  resources:
+    - name: Policy
+      resource:
+        apiVersion: iam.aws.upbound.io/v1beta1
+        kind: Policy
+        metadata:
+          annotations:
+            crossplane.io/composition-resource-name: Policy
+          generateName: test-policy-8djd7-
+          labels:
+            crossplane.io/claim-name: test-policy
+            crossplane.io/claim-namespace: iam-attachments
+            crossplane.io/composite: test-policy-8djd7
+          name: test-policy-8djd7
+          ownerReferences:
+            - apiVersion: iam.crossplane.foobar.net/v1alpha1
+              blockOwnerDeletion: true
+              controller: true
+              kind: XFnTest
+              name: test-policy-8djd7
+              uid: 11d94bf7-3cc8-4cf2-92c0-0ff5bafd5f77
+          test:
+            - toto: tata
+        spec:
+          forProvider:
+            name: test-policy-8djd7
+          providerConfigRef:
+            name: aws-it
+observed:
+  composite:
+    resource:
+      apiVersion: iam.crossplane.foobar.net/v1alpha1
+      kind: XFnTest
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+          argocd.argoproj.io/tracking-id: >-
+            it-central-iam-attachments:iam.crossplane.foobar.net/FnTest:iam-attachments/test-policy
+        creationTimestamp: "2023-02-17T15:25:41Z"
+        finalizers:
+          - composite.apiextensions.crossplane.io
+        generateName: test-policy-
+        generation: 4
+        labels:
+          crossplane.io/claim-name: test-policy
+          crossplane.io/claim-namespace: iam-attachments
+          crossplane.io/composite: test-policy-8djd7
+        name: test-policy-8djd7
+        resourceVersion: "1671784"
+        uid: 11d94bf7-3cc8-4cf2-92c0-0ff5bafd5f77
+      spec:
+        claimRef:
+          apiVersion: iam.crossplane.foobar.net/v1alpha1
+          kind: FnTest
+          name: test-policy
+          namespace: iam-attachments
+        compositionRef:
+          name: aws-iam-fntest-v1alpha1
+        compositionRevisionRef:
+          name: aws-iam-fntest-v1alpha1-7fa67cb
+        compositionUpdatePolicy: Automatic
+        policy: '{{= { toto: "tata"} | json }}'
+        writeConnectionSecretToRef:
+          name: 11d94bf7-3cc8-4cf2-92c0-0ff5bafd5f77
+          namespace: crossplane-secrets
+      status:
+        conditions:
+          - lastTransitionTime: "2023-02-17T15:25:46Z"
+            message: >-
+              cannot compose resources: cannot run Composition Function
+              pipeline: cannot run function "templater": cannot run container:
+              rpc error: code = Unknown desc = exit status 1: xfn: error:
+              spark.Command.Run(): OCI runtime error: exit status 1
+            reason: ReconcileError
+            status: "False"
+            type: Synced

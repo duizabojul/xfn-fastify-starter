@@ -1,0 +1,6 @@
+{
+  "watch": ["lib", "bin"],
+  "ext": "js",
+  "ignore": ["lib/**/*.spec.js"],
+  "exec": "node"
+}

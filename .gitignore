@@ -1,0 +1,30 @@
+.ignore
+
+logs
+log
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+
+# System files
+.DS_Store
+
+# dotenv environment variables files
+*.env
+
+# build output
+*.d.ts
+*.js
+*.js.map
+
+*.tsbuildinfo
+
+!lib/types/*.d.ts
+
+config/
+
+
+
