@@ -34,10 +34,10 @@ RUN npm prune --production
 ########################################################################################################################
 
 FROM alpine as production
-RUN apk add --update --no-cache nodejs npm
+RUN apk add --update --no-cache nodejs
 WORKDIR /home
 
 COPY --from=prepare-production /home .
 
-ENTRYPOINT ["npm", "run"]
-CMD ["start"]
+ENTRYPOINT ["node"]
+CMD ["bin/main.js"]
